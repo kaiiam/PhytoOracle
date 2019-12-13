@@ -43,5 +43,33 @@
         SOILMASK_DIR + DATA_SET["UUID"] + "_right_mask.tif"
       ]
     } for DATA_SET in DATA_FILE_LIST,
+
+    {
+      # Create a tarball for the cleanmetadata, and a list file
+      "command": "ls -l ${CLEANED_META_DIR} > cleanmetadata_list.txt && tar -cf cleanmetadata.tar ${CLEANED_META_DIR}",
+      "environment": {
+        "CLEANED_META_DIR": CLEANED_META_DIR
+      },
+      "inputs": METADATA_CLEANED_LIST,
+      "outputs": [
+        "cleanmetadata_list.txt",
+        "cleanmetadata.tar"
+      ],
+      "local_job": true
+    },
+
+    {
+      # Create a tarball for the soil_mask, and a list file
+      "command": "ls -l ${SOILMASK_DIR} > soilmask_list.txt && tar -cf soilmask.tar ${SOILMASK_DIR}",
+      "environment": {
+        "SOILMASK_DIR": SOILMASK_DIR
+      },
+      "inputs": LEFT_SOILMASK_LIST + RIGHT_SOILMASK_LIST,
+      "outputs": [
+        "soilmask_list.txt",
+        "soilmask.tar"
+      ],
+      "local_job": true
+    }
   ]
 }

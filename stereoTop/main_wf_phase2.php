@@ -97,6 +97,43 @@
         "<?=$CANOPYCOVER_DIR?>" + "canopycover.csv",
         "<?=$CANOPYCOVER_DIR?>" + "canopycover_geostreams.csv"
       ]
+    },
+
+    {
+      # Create a tarball for the fieldmosaic, and a list file
+      "command": "ls -l ${FIELDMOSAIC_DIR} > fieldmosaic_list.txt && tar -cf fieldmosaic.tar ${FIELDMOSAIC_DIR}",
+      "environment": {
+        "FIELDMOSAIC_DIR": "<?=$FIELDMOSAIC_DIR?>",
+      },
+      "inputs": [
+        "<?=$FIELDMOSAIC_DIR?>" + "fullfield_mosaic.png",
+        "<?=$FIELDMOSAIC_DIR?>" + "fullfield_mosaic.png.aux.xml",
+        "<?=$FIELDMOSAIC_DIR?>" + "fullfield_mosaic.tif",
+        "<?=$FIELDMOSAIC_DIR?>" + "fullfield_mosaic.vrt",
+        "<?=$FIELDMOSAIC_DIR?>" + "fullfield_mosaic_10pct.tif",
+        "<?=$FIELDMOSAIC_DIR?>" + "fullfield_mosaic_thumb.tif"
+      ],
+      "outputs": [
+        "fieldmosaic_list.txt",
+        "fieldmosaic.tar"
+      ]
+    },
+
+    {
+      # Create a tarball for canopy_cover, and a list file
+      "command": "ls -l ${$CANOPYCOVER_DIR} > canopy_cover_list.txt && tar -cf canopy_cover.tar ${CANOPYCOVER_DIR}",
+      "environment": {
+        "CANOPYCOVER_DIR": "<?=$CANOPYCOVER_DIR?>",
+      },
+      "inputs": [
+        "<?=$CANOPYCOVER_DIR?>" + "canopycover.csv",
+        "<?=$CANOPYCOVER_DIR?>" + "canopycover_geostreams.csv"
+      ],
+      "outputs": [
+        "canopy_cover_list.txt",
+        "canopy_cover.tar"
+      ]
     }
+
   ]
 }

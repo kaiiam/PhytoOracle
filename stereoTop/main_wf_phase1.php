@@ -55,5 +55,43 @@
       ]
     },
     <?php endforeach; ?>
+
+    {
+      # Create a tarball for the cleanmetadata, and a list file
+      "command": "ls -l ${CLEANED_META_DIR} > cleanmetadata_list.txt && tar -cf cleanmetadata.tar ${CLEANED_META_DIR}",
+      "environment": {
+        "CLEANED_META_DIR": CLEANED_META_DIR
+      },
+      "inputs": [
+      <?php foreach ($data_file_list as &$data_set) :?>
+        "<?=$CLEANED_META_DIR?>" + "<?=$data_set["UUID"]?>" + "_metadata_cleaned.json",
+      <?php endforeach; ?>
+      ],
+      "outputs": [
+        "cleanmetadata_list.txt",
+        "cleanmetadata.tar"
+      ],
+      "local_job": true
+    },
+
+    {
+      # Create a tarball for the soil_mask, and a list file
+      "command": "ls -l ${SOILMASK_DIR} > soilmask_list.txt && tar -cf soilmask.tar ${SOILMASK_DIR}",
+      "environment": {
+        "SOILMASK_DIR": SOILMASK_DIR
+      },
+      "inputs": [
+      <?php foreach ($data_file_list as &$data_set) :?>
+        "<?=$SOILMASK_DIR?>" + "<?=$data_set["UUID"]?>" + "_left_mask.tif",
+        "<?=$SOILMASK_DIR?>" + "<?=$data_set["UUID"]?>" + "_right_mask.tif",
+      <?php endforeach; ?>
+      ],
+      "outputs": [
+        "soilmask_list.txt",
+        "soilmask.tar"
+      ],
+      "local_job": true
+    }
+
   ]
 }
